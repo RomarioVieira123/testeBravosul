@@ -1,0 +1,35 @@
+[
+  {
+    "model": "loan.Loan",
+    "pk": 1,
+    "fields": {
+      "loan_date": "2020-10-15",
+      "delivery_date": "2020-10-20",
+      "date_returned": null,
+      "book": 10 ,
+      "user": 6
+    }
+  },
+  {
+    "model": "loan.Loan",
+    "pk": 2,
+    "fields": {
+      "loan_date": "2020-10-10",
+      "delivery_date": "2020-10-15",
+      "date_returned": "2020-10-15",
+      "book": 11,
+      "user": 7
+    }
+  },
+    {
+    "model": "loan.Loan",
+    "pk": 3,
+    "fields": {
+      "loan_date": "2020-10-17",
+      "delivery_date": "2020-10-21",
+      "date_returned": "2020-10-23",
+      "book": 9,
+      "user": 5
+    }
+  }
+]

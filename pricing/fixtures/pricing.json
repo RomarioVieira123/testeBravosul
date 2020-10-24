@@ -1,0 +1,38 @@
+[
+  {
+    "model": "pricing.Pricing",
+    "pk": 1,
+    "fields": {
+      "penalty": 0,
+      "interest_per_day": 0,
+      "delayed_days": "Without delay"
+    }
+  },
+  {
+    "model": "pricing.Pricing",
+    "pk": 2,
+    "fields": {
+      "penalty": 3,
+      "interest_per_day": 0.2,
+      "delayed_days": "Up to 3 days"
+    }
+  },
+  {
+    "model": "pricing.Pricing",
+    "pk": 3,
+    "fields": {
+      "penalty": 5,
+      "interest_per_day": 0.4,
+      "delayed_days": "Above 3 days"
+    }
+  },
+  {
+    "model": "pricing.Pricing",
+    "pk": 4,
+    "fields": {
+      "penalty": 7,
+      "interest_per_day": 0.6,
+      "delayed_days": "Above 5 days"
+    }
+  }
+]

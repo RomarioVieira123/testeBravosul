@@ -1,0 +1,26 @@
+[
+  {
+    "model": "reservation.Reservation",
+    "pk": 1,
+    "fields": {
+      "active": true,
+      "date_reservation": "2020-10-20 11:10:20",
+      "date_reservation_final": "2020-10-23 11:10:20",
+      "created_at": "2020-09-24 11:54:20",
+      "book": 7,
+      "user": 5
+    }
+  },
+  {
+    "model": "reservation.Reservation",
+    "pk": 2,
+    "fields": {
+      "active": true,
+      "date_reservation": "2020-10-20 11:10:20",
+      "date_reservation_final": "2020-10-23 11:10:20",
+      "created_at": "2020-09-24 11:54:20",
+      "book": 6,
+      "user": 6
+    }
+  }
+]
