@@ -105,7 +105,7 @@ Possui uma listagem de livros reservados de acordo com o livro e uma listagem de
             <li>python3 manage.py loaddata pricing.json</li>
         </ul>
         Os usuários fictíceos, são adicionados automaticamente localizados no arquivo book/fixture/books.json
-    <h3 id="instrucoetesteaplicacao">Instruções de teste aplicação</h3>
+    <h3 id="instrucoetesteaplicacao">Instruções de teste</h3>
         <p>Para realizar o teste da aplicação deve ser usado a ferramenta Postman, ferramenta muito utilizada por desenvolvedores para
            se testar API's, obtida no endereço <a href="https://www.postman.com/">Download Postman</a> de acordo com a versão do Sistema Operacional.
            Com a instalação do Postman realizada e a aplicação rodando, deve adicionar a url ao ferramenta Postman configurando o endereço e porta de
