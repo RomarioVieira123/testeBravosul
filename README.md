@@ -81,7 +81,6 @@ Possui uma listagem de livros reservados de acordo com o livro e uma listagem de
     </ul>
 <h2 id="instrucoesapi">API</h2>
     <h3 id="instrucoesexecucao">Instruções de execucão</h3>
-        <p>
         Ao abrir o projeto pela IDE Pycharm, realizar a instalação do ambiente virtualenv, atráves do seguindo comando:
         <ul>
             <li>python3 -m virtualenv venv</li>
