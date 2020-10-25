@@ -29,63 +29,55 @@ Possui uma listagem de livros reservados de acordo com o livro e uma listagem de
     </li>
 </ul>
 <h2 id="estruturaprojeto">Estrutura do Projeto</h2>
-        A estrutura do projeto está organizado em 4 apps, sendo elas broker, message, shareds, telephone_operator e o projeto core.
+        A estrutura do projeto está organizado em 5 apps, sendo elas book, loan, penalty, pricing, reservation e o projeto core.
         A organização do banco de dados obedece o diagrama abaixo:
         <img src="images/Diagrama%20Livraria%20Teste%20Python%20BravoSul.png" alt="">
         <h4 id="appbook">App Book</h4>
             <ol>
-                <li>App responsável pelos dados do broker, sendo o idbroker, name e create_at.</li>
-                <li>Sua serialização é realizada apenas retornando o idbroker.</li>
-                <li>Não possui urls ou views.</li>          
+                <li>App responsável pelos dados do book, sendo o title, publising_company, edition, year_publication e create_at.</li>
+                <li>Possui uma url e uma view.</li>       
+                <li>Sua view retorna todos os livros e seu status se está disponível ou emprestado.</li>    
+                <li>Possui uma requisição GET.</li>   
             </ol>         
         <h4 id="apploan">App Loan</h4>
             <ol>
-                <li>App responsável pelos dados compartilhados.</li>
-                <li>Possui 3 models sendo Country, Stat e City usando apenas Stat.</li>
-                <li>Não possui serialização, urls ou views.</li>
-                <li>Contém o arquivo BlackList.py responsável pela conexão com a API Black List.</li>
-                <li>Nesta classe "toda" a lista é carregada uma única vez para se evitar que a aplicação perca desempenho a cada requisição realizada.</li>
+                <li>App responsável pelos empréstimo realizados, sendo book, user, loan_date, delivery_date, date_returned.</li>
+                <li>Possui uma url e uma view.</li>
+                <li>Sua view retorna  todos os livros emprestados e caso possua multas, sua visualização.</li>
+                <li>Possui uma requisição GET.</li>
             </ol>  
         <h4 id="apppenalty">App Penalty</h4>
              <ol>
-                <li>App responsável pelos dados de mensagens, sendo o idmensagem, operator, stat, message, destination_number, shipping_time e created_at.</li>
-                <li>Sua serialização é realizada apenas retornando o idmensagem e operator.</li>
-                <li>Posusi a url principal de acesso da API.</li>    
-                <li>Sua view possui 2 métodos sendo GET e POST.</li>
-                <li>O método GET retorna HTTP 400, enquanto o método POST retorna os dados solicitados de acordo com a regra do teste, sendo somente idmensagem e idbroker.</li>
-                <li>Possui a pasta fixtures onde guarda um arquivo shared.json para inicialização e população com dados fictícios no banco de dados.</li>
+                <li>App responsável pelos dados de multa relacionados a um empréstimo, sendo loan, delayed_days, fine_amount, penalty_fee, interest_per_day, total_paid.</li>  
+                <li>Não possui nem urls e views</li>
+                <li>Não possui requisições.</li>
             </ol>  
         <h4 id="apppricing">App Pricing</h4>
              <ol>
-                <li>App responsável pelos dados da operadora sendo idoperator, broker, operator e created_at.</li>
-                <li>Sua serialização é realizada apenas retornando o idmensagem e operator.</li>
-                <li>Posusi 2 métodos de serialização onde um retorna todos os dados e o outro retorna apenas o idbroker.</li>    
-                <li>Não possui urls ou views.</li>
+                <li>App responsável pelos dados de precificação da multa, sendo penalty, interest_per_day e delayed_days.</li>
+                <li>Não possui VIEW ou URLS.</li>    
+                <li>Possui uma pasta fixtures com um arquivo pricing.json com dados de precificação para o cálculo de multa.</li>
+                <li>Não possui requisições.</li>
             </ol>
        <h4 id="appreservation">App Reservation</h4>
              <ol>
-                <li>App responsável pelos dados de mensagens, sendo o idmensagem, operator, stat, message, destination_number, shipping_time e created_at.</li>
-                <li>Sua serialização é realizada apenas retornando o idmensagem e operator.</li>
-                <li>Posusi a url principal de acesso da API.</li>    
-                <li>Sua view possui 2 métodos sendo GET e POST.</li>
-                <li>O método GET retorna HTTP 400, enquanto o método POST retorna os dados solicitados de acordo com a regra do teste, sendo somente idmensagem e idbroker.</li>
-                <li>Possui a pasta fixtures onde guarda um arquivo shared.json para inicialização e população com dados fictícios no banco de dados.</li>
+                <li>App responsável pelos dados de reserva de um livro sendo user, book, active, date_reservation, date_reservation_final</li>
+                <li>Possui uma URL principal.</li>    
+                <li>Possui uma VIEW principal, responsável pelo retorno dos livros reservados de acordo com o usuário.</li>
+                <li>Possui uma pasta fixtures com um arquivo reservation.json com dados fictíceos de reserva.</li>
+                <li>Possui uma requisição POST.</li>
             </ol>   
         <h4 id="projetocore">Projeto Core</h4>
             <ol>
                 <li>Projeto principal do django.</li>
                 <li>Adicionado ao arquivo settings.py todas as variáveis usadas como constantes no projeto. </li>
-                <li>Adicionado ao arquivo urls.py, as url principal da aplicação /api/messages</li>
             </ol>  
 <h2 id="regras">Regras Implementadas</h2>
     <ul>
-        <li>Mensagens que possuam o nº de celular na blacklist e ativos, devem ser bloqueadas.</li>
-        <li>Mensagens para SP, devem ser bloqueadas</li>
-        <li>Mensagens com agendamento após as 19:59:59 devem ser bloqueadas.</li>
-        <li>Mensagens com mais de 140 caracteres devem ser bloqueadas.</li>
-        <li>Mensagens com DDD com mais de 2 dígitos ou menos de 2 dígitos ou DDD não for válido devem ser bloqueadas.(Válido se estiver cadastrado no banco de dados.)</li>
-        <li>Mensagens com nº de celular com mais ou menos de 9 dígitos, devem ser bloqueadas.</li>
-        <li>Mensagens com nº de celular em que o 1º dígito não começe com 9 ou o 2 dígito menor que 6 devem ser bloqueadas.</li>   
+        <li>Empréstimos com atraso de até 3 dias, possui 3% sobre o valor da multa mais 0,2% de juros por dia.</li>
+        <li>Empréstimos com atraso acima de até 4 dias, possui 5% sobre o valor da multa mais 0,4% de juros por dia.</li>
+        <li>Empréstimos com atraso acima de 5 dias, possui 7% sobre o valor da multa mais 0,6% de juros por dia.</li>
+        <li>Não é possível reservar um livro que já esteja reservado.</li>
     </ul>
 <h2 id="instrucoesapi">API</h2>
     <h3 id="instrucoesexecucao">Instruções de execucão</h3>
@@ -99,6 +91,7 @@ Possui uma listagem de livros reservados de acordo com o livro e uma listagem de
         <ul>
             <li>. venv/bin/activate</li> 
         </ul>
+        Após ativação do ambiente virtual é possível realizar a instalação dos pacotes necessários para a execução da aplicação abrindo o arquivo requiments.txt e realizando a instalação automaticamente.
         Após a ativação do ambiente virtual, realizar as migrações necessárias para ocorrer a criação do modelos e a criação do banco de dados .sqlite.
         Executar os comandos abaixo:
         <br>
@@ -108,18 +101,21 @@ Possui uma listagem de livros reservados de acordo com o livro e uma listagem de
         </ul>
         Após as migrações, realizar as configurações dos dados fictícios para teste da aplicação. Digita o seguinte comando a linha de comando:
         <ul>
-            <li>python3 manage.py loaddata shareds.json</li>
+            <li>python3 manage.py loaddata books.json</li>
+            <li>python3 manage.py loaddata loans.json</li>
+            <li>python3 manage.py loaddata pricing.json</li>
         </ul>
+        Os usuários fictíceos, são adicionados automaticamente localizados no arquivo book/fixture/books.json
     <h3 id="instrucoetesteaplicacao">Instruções de teste aplicação</h3>
         <p>Para realizar o teste da aplicação deve ser usado a ferramenta Postman, ferramenta muito utilizada por desenvolvedores para
            se testar API's, obtida no endereço <a href="https://www.postman.com/">Download Postman</a> de acordo com a versão do Sistema Operacional.
            Com a instalação do Postman realizada e a aplicação rodando, deve adicionar a url ao ferramenta Postman configurando o endereço e porta de
            execução do Django e configurar os parâmentros de acordo com a imagem.
-        <img src="images/Teste%20Aplicação.png" alt=""></p>
-            No campo de dados adicionar os dados localizados em /comandos/Dados usados para test.text.
-            <img src="images/Teste%20Aplicação%203.png" alt="">
-            Ao solicitar a requisição o retorno deve ser as mensagens válidas com seu respectivo broker.
-        <img src="images/Teste%20Aplicação%202.png" alt="">
+           Ao solicitar a requisição o retorno deve ser as mensagens válidas com seu respectivo json.</p>
+            <img src="images/Emprestimos%20com%20multas.png" alt="">
+            <img src="images/Reserva.png" alt="">
+            <img src="images/Livros1.png" alt="">
+            <img src="images/Livros2.png" alt="">
     <h3 id="tecnologiasusadas">Tecnologias Usadas para Desenvolvimento</h3>
         <ul>
             <li><h4 id="sistemaoperacional">Sistema Operacional</h4>
@@ -134,6 +130,5 @@ Possui uma listagem de livros reservados de acordo com o livro e uma listagem de
             <li><h4 id="testeapi">Teste API</h4>
             Postman for Linux - versão 7.33.1
             </li>     
-        </ul>
-        
+        </ul>    
 </body>

@@ -20,6 +20,9 @@ class ReservationView(APIView):
         if reservation is not None:
             return Response({'sucess': True, 'reservation': 'Book already has reservation!'})
 
+        if request.data['id'] is None:
+            return Response({'sucess': True, 'reservation': 'User not found!'})
+
         reservation_facade = ReservationFacade()
         reservation = reservation_facade.create(request.data, pk)
 
